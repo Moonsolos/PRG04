@@ -1,12 +1,14 @@
 import {Actor, Engine, Random, Timer, Vector, Label, Color, Font, FontUnit, Scene, Class, } from "excalibur";
 import {Fish} from "./fish.js";
 import {Fish2} from "./fish2.js";
+import {Fish3} from "./fish3.js";
 import {Background} from "./mapLoader.js";
 
 export class gameScene extends Scene {
     constructor() {
         super();
     }
+    i
     game
     engine
     score
@@ -18,11 +20,12 @@ export class gameScene extends Scene {
         this.game = Engine
         this.timer = new Timer({
             fcn: () => this.spawn(Engine),
-            interval: 700,
+            interval: 1000,
             repeats: true
         })
         Engine.currentScene.add(this.timer)
         this.timer.start()
+
     }
 
 
@@ -33,6 +36,7 @@ export class gameScene extends Scene {
         const fish = new Fish();
         this.add(fish);
         this.score = 0
+        this.i = 0
         this.lives = 3
         this.mylabel = new Label({
             text: `Score: ${this.score}`,
@@ -73,12 +77,25 @@ export class gameScene extends Scene {
     }
 
     spawn(engine) {
+
         const fish2 = new Fish2(
             engine.random.integer(0, 700),
-            engine.random.integer(0, 1399)
+            engine.random.integer(0, 1399),
+            this.i++,
         )
         this.add(fish2)
+        if (this.engine.currentScene.i == 5){
+            const fish3 = new Fish3(
+                engine.random.integer(0, 700),
+                engine.random.integer(0, 1399),
+            )
+            this.add(fish3)
+            this.i = 0
+        }
+
     }
+
+
 }
 
 
